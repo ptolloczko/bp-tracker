@@ -2,9 +2,15 @@
   <td class="px-3 py-3 text-sm text-gray-600 whitespace-nowrap">
     {{ formatDate(reading().recordedAt) }}
   </td>
-  <td class="px-3 py-3 text-sm font-medium text-center">{{ reading().systolic }}</td>
-  <td class="px-3 py-3 text-sm font-medium text-center">{{ reading().diastolic }}</td>
-  <td class="px-3 py-3 text-sm font-medium text-center">{{ reading().pulse }}</td>
+  <td class="px-3 py-3 text-sm font-medium text-center">
+    <span aria-label="{{ reading().systolic }} mmHg systolic">{{ reading().systolic }}</span>
+  </td>
+  <td class="px-3 py-3 text-sm font-medium text-center">
+    <span aria-label="{{ reading().diastolic }} mmHg diastolic">{{ reading().diastolic }}</span>
+  </td>
+  <td class="px-3 py-3 text-sm font-medium text-center">
+    <span aria-label="{{ reading().pulse }} bpm pulse">{{ reading().pulse }}</span>
+  </td>
   <td class="px-3 py-3 text-sm text-gray-500 max-w-xs">
     {{ reading().notes ? truncate(reading().notes!) : '' }}
   </td>
@@ -12,19 +18,19 @@
     @if (!confirmingDelete) {
       <button (click)="edit.emit()"
               class="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
-              aria-label="Edit reading">
+              [attr.aria-label]="'Edit reading from ' + formatDate(reading().recordedAt)">
         Edit
       </button>
       <button (click)="confirmingDelete = true"
               class="ml-3 text-red-600 hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-              aria-label="Delete reading">
+              [attr.aria-label]="'Delete reading from ' + formatDate(reading().recordedAt)">
         Delete
       </button>
     } @else {
       <span class="text-sm text-gray-700 mr-2">Delete?</span>
       <button (click)="delete.emit()"
               class="text-red-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-              aria-label="Confirm delete">
+              [attr.aria-label]="'Confirm delete reading from ' + formatDate(reading().recordedAt)">
         Yes
       </button>
       <button (click)="confirmingDelete = false"
