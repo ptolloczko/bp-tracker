@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+    <!-- Systolic -->
+    <div>
+      <label for="systolic" class="block text-sm font-medium text-gray-700">
+        Systolic <span class="text-gray-400">(mmHg)</span>
+      </label>
+      <input id="systolic" type="number" formControlName="systolic"
+             aria-describedby="systolic-error"
+             class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      @if (hasError('systolic', 'required')) {
+        <p id="systolic-error" class="mt-1 text-sm text-red-600">Systolic is required.</p>
+      } @else if (hasError('systolic', 'min') || hasError('systolic', 'max')) {
+        <p id="systolic-error" class="mt-1 text-sm text-red-600">Must be 60–250 mmHg.</p>
+      }
+    </div>
+
+    <!-- Diastolic -->
+    <div>
+      <label for="diastolic" class="block text-sm font-medium text-gray-700">
+        Diastolic <span class="text-gray-400">(mmHg)</span>
+      </label>
+      <input id="diastolic" type="number" formControlName="diastolic"
+             aria-describedby="diastolic-error"
+             class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      @if (hasError('diastolic', 'required')) {
+        <p id="diastolic-error" class="mt-1 text-sm text-red-600">Diastolic is required.</p>
+      } @else if (hasError('diastolic', 'min') || hasError('diastolic', 'max')) {
+        <p id="diastolic-error" class="mt-1 text-sm text-red-600">Must be 40–150 mmHg.</p>
+      }
+    </div>
+
+    <!-- Pulse -->
+    <div>
+      <label for="pulse" class="block text-sm font-medium text-gray-700">
+        Pulse <span class="text-gray-400">(bpm)</span>
+      </label>
+      <input id="pulse" type="number" formControlName="pulse"
+             aria-describedby="pulse-error"
+             class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      @if (hasError('pulse', 'required')) {
+        <p id="pulse-error" class="mt-1 text-sm text-red-600">Pulse is required.</p>
+      } @else if (hasError('pulse', 'min') || hasError('pulse', 'max')) {
+        <p id="pulse-error" class="mt-1 text-sm text-red-600">Must be 30–200 bpm.</p>
+      }
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+
+    <!-- Date & Time -->
+    <div>
+      <label for="recordedAt" class="block text-sm font-medium text-gray-700">Date &amp; Time</label>
+      <input id="recordedAt" type="datetime-local" formControlName="recordedAt"
+             aria-describedby="recordedAt-error"
+             class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      @if (hasError('recordedAt', 'required')) {
+        <p id="recordedAt-error" class="mt-1 text-sm text-red-600">Date &amp; time is required.</p>
+      }
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <label for="notes" class="block text-sm font-medium text-gray-700">
+        Notes <span class="text-gray-400">(optional)</span>
+      </label>
+      <textarea id="notes" formControlName="notes" rows="2"
+                aria-describedby="notes-error"
+                class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      @if (hasError('notes', 'maxlength')) {
+        <p id="notes-error" class="mt-1 text-sm text-red-600">Notes must be 500 characters or fewer.</p>
+      }
+    </div>
+
+  </div>
+
+  <div class="mt-4 flex gap-3">
+    <button type="submit"
+            class="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      {{ reading() ? 'Update' : 'Save' }}
+    </button>
+    @if (reading()) {
+      <button type="button" (click)="cancel()"
+              class="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Cancel
+      </button>
+    }
+  </div>
+</form>
