@@ -1,10 +1,13 @@
 import { Component, effect, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { Reading, VALIDATION } from '../../models/reading.model';
 
 @Component({
   selector: 'app-reading-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './reading-form.component.html',
 })
 export class ReadingFormComponent {
@@ -13,7 +16,6 @@ export class ReadingFormComponent {
   cancelled = output<void>();
 
   form: FormGroup;
-  submitted = false;
 
   constructor(private fb: FormBuilder) {
     this.form = fb.group({
@@ -31,12 +33,11 @@ export class ReadingFormComponent {
       } else {
         this.form.reset({ recordedAt: this.nowLocal() });
       }
-      this.submitted = false;
     });
   }
 
   submit(): void {
-    this.submitted = true;
+    this.form.markAllAsTouched();
     if (this.form.invalid) return;
     const { systolic, diastolic, pulse, recordedAt, notes } = this.form.value;
     this.saved.emit({
@@ -47,7 +48,6 @@ export class ReadingFormComponent {
       notes:      notes || undefined,
     });
     this.form.reset({ recordedAt: this.nowLocal() });
-    this.submitted = false;
   }
 
   cancel(): void {
@@ -56,10 +56,6 @@ export class ReadingFormComponent {
 
   field(name: string) {
     return this.form.get(name)!;
-  }
-
-  hasError(name: string, error: string) {
-    return this.submitted && this.field(name).hasError(error);
   }
 
   private nowLocal(): string {

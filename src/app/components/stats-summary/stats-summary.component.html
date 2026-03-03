@@ -1,10 +1,23 @@
-<div class="flex gap-8 p-4 bg-gray-50 rounded-lg" aria-live="polite" aria-atomic="true">
-  <dl>
-    <dt class="text-sm text-gray-500">Avg Systolic</dt>
-    <dd class="text-2xl font-semibold">{{ averages()?.systolic ?? '—' }} <span class="sr-only">mmHg</span></dd>
-  </dl>
-  <dl>
-    <dt class="text-sm text-gray-500">Avg Diastolic</dt>
-    <dd class="text-2xl font-semibold">{{ averages()?.diastolic ?? '—' }} <span class="sr-only">mmHg</span></dd>
-  </dl>
-</div>
+@if (averages()) {
+  <div class="flex gap-12">
+    <dl>
+      <dt class="mat-body-small text-gray-500">Avg Systolic</dt>
+      <dd class="mat-headline-small m-0">{{ averages()!.systolic }} <span class="sr-only">mmHg</span></dd>
+    </dl>
+    <dl>
+      <dt class="mat-body-small text-gray-500">Avg Diastolic</dt>
+      <dd class="mat-headline-small m-0">{{ averages()!.diastolic }} <span class="sr-only">mmHg</span></dd>
+    </dl>
+  </div>
+} @else {
+  <div class="flex gap-12">
+    <dl>
+      <dt class="mat-body-small text-gray-500">Avg Systolic</dt>
+      <dd class="mat-headline-small m-0" aria-label="No data">—</dd>
+    </dl>
+    <dl>
+      <dt class="mat-body-small text-gray-500">Avg Diastolic</dt>
+      <dd class="mat-headline-small m-0" aria-label="No data">—</dd>
+    </dl>
+  </div>
+}

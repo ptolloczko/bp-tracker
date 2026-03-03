@@ -1,30 +1,38 @@
-<div class="min-h-screen bg-gray-100">
-  <div class="mx-auto max-w-3xl px-4 py-8">
+<mat-toolbar color="primary">
+  <span>Blood Pressure Tracker</span>
+</mat-toolbar>
 
-    <h1 class="mb-6 text-2xl font-bold text-gray-800">Blood Pressure Tracker</h1>
+<div class="mx-auto max-w-3xl px-4 py-6 flex flex-col gap-4">
 
-    <section class="mb-4 rounded-lg bg-white p-6 shadow-sm" aria-label="Add or edit reading">
-      <h2 class="mb-4 text-base font-semibold text-gray-700">
-        {{ editingReading() ? 'Edit Reading' : 'Add Reading' }}
-      </h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ editingReading() ? 'Edit Reading' : 'Add Reading' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="pt-4">
       <app-reading-form
         [reading]="editingReading()"
         (saved)="onSaved($event)"
         (cancelled)="onCancelled()" />
-    </section>
+    </mat-card-content>
+  </mat-card>
 
-    <section class="mb-4 rounded-lg bg-white p-6 shadow-sm" aria-label="Summary statistics">
-      <h2 class="mb-3 text-base font-semibold text-gray-700">Averages</h2>
+  <mat-card aria-live="polite" aria-atomic="true">
+    <mat-card-header>
+      <mat-card-title>Averages</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="pt-4">
       <app-stats-summary [averages]="averages()" />
-    </section>
+    </mat-card-content>
+  </mat-card>
 
-    <section class="rounded-lg bg-white shadow-sm" aria-label="Reading list">
-      <h2 class="px-6 pt-6 pb-2 text-base font-semibold text-gray-700">Readings</h2>
-      <app-reading-list
-        [readings]="readings()"
-        (edit)="onEdit($event)"
-        (delete)="onDelete($event)" />
-    </section>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Readings</mat-card-title>
+    </mat-card-header>
+    <app-reading-list
+      [readings]="readings()"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)" />
+  </mat-card>
 
-  </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 import { Reading } from './models/reading.model';
 import { ReadingService } from './services/reading.service';
 import { ReadingFormComponent } from './components/reading-form/reading-form.component';
@@ -7,7 +9,7 @@ import { ReadingListComponent } from './components/reading-list/reading-list.com
 
 @Component({
   selector: 'app-root',
-  imports: [ReadingFormComponent, StatsSummaryComponent, ReadingListComponent],
+  imports: [MatToolbarModule, MatCardModule, ReadingFormComponent, StatsSummaryComponent, ReadingListComponent],
   templateUrl: './app.html',
 })
 export class App {
